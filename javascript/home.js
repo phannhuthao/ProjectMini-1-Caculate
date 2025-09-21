@@ -1,6 +1,8 @@
 let currentInput = "0";
 let previousValue = null;
 let operator = null; // toán tử các phép tính  (+, -, *, /)
+let manyString = "777";
+let text = "Bạn Đã Trúng Thưởng" + manyString;
 const display = document.getElementById('display');
 
 // Cập nhật hiển thị màn hình máy tính
@@ -15,6 +17,13 @@ function inputDigit(digit) {
   } else {
     currentInput += digit; // nối thêm số
   }
+  showUpdateDisplay();
+}
+// Xử lý khi bấm chuỗi 777 hiển thị dòng tin nhắn ẩn
+function inputManyString() {
+  previousValue = parseFloat(currentInput); // lưu giá trị số hiện tại 
+  currentInput = "0"; // Đặt lại giá trị sau khi đã bấm
+  operator = "777" + manyString;
   showUpdateDisplay();
 }
 
@@ -52,6 +61,15 @@ function division() {
 
 /* --- Khi bấm = --- */
 function handleEqual() {
+  // Nếu người dùng nhập đúng mật khẩu ẩn
+  if (currentInput === manyString) {
+    currentInput = text;
+    previousValue = null;
+    operator = null;
+    showUpdateDisplay();
+    return;
+  }
+
   if (!operator || previousValue === null) {
     console.log("Chưa có phép tính để thực hiện");
     return
@@ -69,6 +87,8 @@ function handleEqual() {
     result = a * b;
   } else if (operator === '/') {
     result = a / b;
+  } else if(operator === '777') {
+    result = text;
   }
 
   // chuyển kết quả về chuỗi (xóa số đuôi 0 thừa)
